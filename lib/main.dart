@@ -30,10 +30,8 @@ class HomePage extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () => showAppModalBottomSheet(
             context: context,
-            builder: (context) => NavigatorPage(
-              navigatorKey: GlobalKey(),
-              child: const ModalPage(),
-            ),
+            builder: (context) => const AppDraggableScrollableNavigatorSheet(
+                child: const ModalPage()),
           ),
           child: const Text('Show modal'),
         ),
@@ -46,8 +44,7 @@ class ModalPage extends StatelessWidget {
   const ModalPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return AppDraggableScrollableSheet(
-        child: Scaffold(
+    return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
@@ -67,7 +64,7 @@ class ModalPage extends StatelessWidget {
               child: const Text('Go to Detail'),
             ),
           )),
-    ));
+    );
   }
 }
 
@@ -115,8 +112,8 @@ Future<T?> showAppModalBottomSheet<T>({
         useRootNavigator: true,
         builder: builder);
 
-class AppDraggableScrollableSheet extends StatelessWidget {
-  const AppDraggableScrollableSheet({required this.child, Key? key})
+class AppDraggableScrollableNavigatorSheet extends StatelessWidget {
+  const AppDraggableScrollableNavigatorSheet({required this.child, Key? key})
       : super(key: key);
 
   final Widget child;
@@ -136,7 +133,7 @@ class AppDraggableScrollableSheet extends StatelessWidget {
                 topLeft: Radius.circular(16.0),
                 topRight: Radius.circular(16.0),
               ),
-              child: child);
+              child: NavigatorPage(navigatorKey: GlobalKey(), child: child));
         });
   }
 }
