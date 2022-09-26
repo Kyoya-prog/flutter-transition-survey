@@ -30,8 +30,7 @@ class HomePage extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () => showAppModalBottomSheet(
             context: context,
-            builder: (context) => const AppDraggableScrollableNavigatorSheet(
-                child: const ModalPage()),
+            builder: (context) => ModalPage(),
           ),
           child: const Text('Show modal'),
         ),
@@ -44,26 +43,28 @@ class ModalPage extends StatelessWidget {
   const ModalPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
-          icon: const Icon(Icons.close),
+    return AppDraggableScrollableNavigatorSheet(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+            icon: const Icon(Icons.close),
+          ),
+          title: const Text('Modal'),
         ),
-        title: const Text('Modal'),
-      ),
-      body: Container(
-          color: Colors.red,
-          child: Center(
-            child: ElevatedButton(
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const ModalDetailPage(),
+        body: Container(
+            color: Colors.red,
+            child: Center(
+              child: ElevatedButton(
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ModalDetailPage(),
+                  ),
                 ),
+                child: const Text('Go to Detail'),
               ),
-              child: const Text('Go to Detail'),
-            ),
-          )),
+            )),
+      ),
     );
   }
 }
